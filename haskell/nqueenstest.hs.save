@@ -1,0 +1,12 @@
+type Queen = (Int, Int)
+type Queens = [Queen]
+
+n = 4
+
+eats :: Queen -> Queen -> Bool
+eats (x1,y1) (x2,y2) = 
+    x1 == x2 || y1 == y2
+
+possible :: Queen -> Queens -> Bool
+possible (x,y) solution = 
+    
