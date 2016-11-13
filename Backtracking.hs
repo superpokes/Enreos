@@ -75,20 +75,18 @@ type Queens = [Queen]
 
 nQueens :: Int -> [Queens]
 nQueens 0 = []
-nQueens n = nQueens' n [] where
-    nQueens' size [] = nQueens' size $ [ [(x,1)] | x <- [1..size]]
-    nQueens' size s =
-        if currStage < size
+nQueens size = nQueens' [] where
+    nQueens' [] = nQueens' [ [(x,1)] | x <- [1..size]]
+    nQueens' s =
+        if stage < size
         then do
             qs <- s
             xq <- [1..size]
-            guard $ possible (xq,currStage + 1) qs
-            nQueens' size $ return ((xq,currStage + 1):qs)
+            guard $ possible (xq,stage + 1) qs
+            nQueens' $ return ((xq,stage + 1):qs)
         else s
         where
-            currStage = stage s
-            stage [] = 0
-            stage s = maximum $ map snd $ head s
+            stage = maximum $ map snd $ head s
             possible _ [] = True
             possible q qs = not $ or $ map (eats q) qs
                 where eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
