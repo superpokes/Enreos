@@ -1,3 +1,0 @@
-maxSublist :: (Num a, Ord a) => [a] -> [a]
-maxSublist [] = []
-maxSublist (x:xs) = let 
