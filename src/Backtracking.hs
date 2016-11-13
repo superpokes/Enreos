@@ -74,10 +74,35 @@ import Control.Monad
 type Queen = (Int, Int)
 type Queens = [Queen]
 
+eats :: Queen -> Queen -> Bool
+eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
+
 possible :: Queen -> Queens -> Bool
 possible _ [] = True
-possible q qs = not or $ map (eats q) qs
-    where eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
+possible q qs = not $ or $ map (eats q) qs
 
-main :: IO ()
-main = print $ nQueens 4
+stage :: [Queens] -> Int
+stage [] = 0
+stage s = maximum $ map snd $ head s
+
+nextStage :: Int -> [Queens] -> [Queens]
+nextStage size [] = nextStage size $ [ [(x,1)] | x <- [1..size]]
+nextStage size s =
+    if currStage < size
+    then do
+        qs <- s
+        xq <- [1..size]
+        guard $ possible (xq,currStage + 1) qs
+        nextStage size $ return ((xq,currStage + 1):qs)
+    else s
+    where currStage = stage s
+
+paint :: Queens -> IO ()
+paint [] = return ()
+paint (q:qs) = do
+    putStrLn $ paintq q
+    paint qs
+    where paintq (x,y) = (take (2*(x-1)) (repeat ' ')) ++ "Q "
+
+--main :: IO ()
+--main = print $ nQueens 4
