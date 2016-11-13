@@ -1,5 +1,3 @@
-module Backtracking where
-
 {-|
     Calcula las soluciones al problema de como colocar reinas en un tablero de tamaño n.
     Toma como parámetro el tamaño del tablero.
@@ -104,5 +102,5 @@ paint (q:qs) = do
     paint qs
     where paintq (x,y) = (take (2*(x-1)) (repeat ' ')) ++ "Q "
 
---main :: IO ()
---main = print $ nQueens 4
+main :: IO ()
+main = putStrLn ":)"
