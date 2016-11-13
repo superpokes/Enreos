@@ -42,33 +42,42 @@ module Backtracking where
 --            y <- [1..n]
 --            return (x,y)
 
-import Control.Monad
+--import Control.Monad
+--
+--type Queen = (Int, Int)
+--type Queens = [Queen]
+--nQueens :: Int -> [Queens]
+--nQueens 0 = []
+--nQueens n =
+--    nQueens' initial
+--    where
+--        initial = do
+--            x <- [1..n]
+--            return (x, 1)
+--        nQueens' :: Queens -> [Queens]
+--        nQueens' stage = do
+--            xpos <- [1..n]
+--            guard $ possible (xpos, nextlevel)
+--            if nextlevel == n then return (xpos, nextlevel) else nQueens' $ return (xpos, nextlevel)
+--            where
+--                nextlevel = (snd $ head stage) + 1
+--                possible :: Queens -> Bool
+--                possible ((x,y):solution) =
+--                    fst $ foldl possiblef (True, nextlevel - 1) solution
+--                    where
+--                        possiblef (a,b) x =
+--                            if not a || x == new || abs(x-new) == abs(b-nextlevel)
+--                            then (False, b - 1)
+--                            else (a, b - 1)
 
+import Control.Monad
 type Queen = (Int, Int)
 type Queens = [Queen]
-nQueens :: Int -> [Queens]
-nQueens 0 = []
-nQueens n =
-    nQueens' initial
-    where
-        initial = do
-            x <- [1..n]
-            return (x, 1)
-        nQueens' :: Queens -> [Queens]
-        nQueens' stage = do
-            xpos <- [1..n]
-            guard $ possible (xpos, nextlevel)
-            if nextlevel == n then return (xpos, nextlevel) else nQueens' $ return (xpos, nextlevel)
-            where
-                nextlevel = (snd $ head stage) + 1
-                possible :: Queens -> Bool
-                possible ((x,y):solution) =
-                    fst $ foldl possiblef (True, nextlevel - 1) solution
-                    where
-                        possiblef (a,b) x =
-                            if not a || x == new || abs(x-new) == abs(b-nextlevel)
-                            then (False, b - 1)
-                            else (a, b - 1)
+
+possible :: Queen -> Queens -> Bool
+possible _ [] = True
+possible q qs = not or $ map (eats q) qs
+    where eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
 
 main :: IO ()
 main = print $ nQueens 4
