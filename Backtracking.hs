@@ -69,31 +69,53 @@
 --                            else (a, b - 1)
 
 import Control.Monad
+
 type Queen = (Int, Int)
 type Queens = [Queen]
 
-eats :: Queen -> Queen -> Bool
-eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
+nQueens :: Int -> [Queens]
+nQueens 0 = []
+nQueens n = nQueens' n [] where
+    nQueens' size [] = nQueens' size $ [ [(x,1)] | x <- [1..size]]
+    nQueens' size s =
+        if currStage < size
+        then do
+            qs <- s
+            xq <- [1..size]
+            guard $ possible (xq,currStage + 1) qs
+            nQueens' size $ return ((xq,currStage + 1):qs)
+        else s
+        where
+            currStage = stage s
+            stage [] = 0
+            stage s = maximum $ map snd $ head s
+            possible _ [] = True
+            possible q qs = not $ or $ map (eats q) qs
+                where eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
 
-possible :: Queen -> Queens -> Bool
-possible _ [] = True
-possible q qs = not $ or $ map (eats q) qs
 
-stage :: [Queens] -> Int
-stage [] = 0
-stage s = maximum $ map snd $ head s
-
-nextStage :: Int -> [Queens] -> [Queens]
-nextStage size [] = nextStage size $ [ [(x,1)] | x <- [1..size]]
-nextStage size s =
-    if currStage < size
-    then do
-        qs <- s
-        xq <- [1..size]
-        guard $ possible (xq,currStage + 1) qs
-        nextStage size $ return ((xq,currStage + 1):qs)
-    else s
-    where currStage = stage s
+--eats :: Queen -> Queen -> Bool
+--eats (x1, x2) (y1, y2) = x1 == y1 || x2 == y2 || abs(x1-y1) == abs(x2-y2)
+--
+--possible :: Queen -> Queens -> Bool
+--possible _ [] = True
+--possible q qs = not $ or $ map (eats q) qs
+--
+--stage :: [Queens] -> Int
+--stage [] = 0
+--stage s = maximum $ map snd $ head s
+--
+--nextStage :: Int -> [Queens] -> [Queens]
+--nextStage size [] = nextStage size $ [ [(x,1)] | x <- [1..size]]
+--nextStage size s =
+--    if currStage < size
+--    then do
+--        qs <- s
+--        xq <- [1..size]
+--        guard $ possible (xq,currStage + 1) qs
+--        nextStage size $ return ((xq,currStage + 1):qs)
+--    else s
+--    where currStage = stage s
 
 paint :: Queens -> IO ()
 paint [] = return ()
