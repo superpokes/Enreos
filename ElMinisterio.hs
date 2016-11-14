@@ -12,12 +12,12 @@ getTrabajador :: Tabla -> Int -> [Int]
 getTrabajador t n = t !! n
 
 {-|
-    :)
+    :(
 -}
 resolver :: Tabla -> [Int]
 resolver tabla = resolver' 0 [] where
     laststage = length $ head tabla
-    resolver' stage maxeff =
+    resolver' stage maxeff
 
 main :: IO ()
 main = print ":)"
