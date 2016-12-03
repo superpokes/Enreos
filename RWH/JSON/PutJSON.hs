@@ -3,6 +3,7 @@ module PutJSON where
 import Data.List (intercalate)
 import RWH.JSON.SimpleJSON
 
+-- | oye está gracioso
 renderJValue :: JValue -> String
 renderJValue (JString s) = show s
 renderJValue (JNumber n) = show n
