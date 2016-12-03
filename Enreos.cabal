@@ -1,9 +1,0 @@
-name:              Enreos
-version:           1.0
-Build-Type:        Simple
-cabal-version:     >= 1.2
-
-executable Enreos
-  main-is:         Backtracking.hs
-  hs-source-dirs:  src
-  build-depends:   base

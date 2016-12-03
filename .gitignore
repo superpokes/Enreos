@@ -1,3 +1,6 @@
 .idea
 dist
 *.iml
+
+*.hi
+*.o
