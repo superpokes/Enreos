@@ -1,7 +1,7 @@
 module PutJSON where
 
 import Data.List (intercalate)
-import SimpleJSON
+import RWH.JSON.SimpleJSON
 
 renderJValue :: JValue -> String
 renderJValue (JString s) = show s
