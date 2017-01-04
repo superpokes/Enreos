@@ -1,2 +1,2 @@
-# :)
-Leftovers of my quest to learn haskell
+# E N R E O S
+A collection of random stuff I made.
