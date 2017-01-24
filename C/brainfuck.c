@@ -1,3 +1,6 @@
+// brainfuck.c
+// Crappy brainfuck "interpreter", which more or less works
+// I plan on rewriting this
 #include <stdlib.h>
 #include <stdio.h>
 
