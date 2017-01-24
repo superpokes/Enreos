@@ -1,5 +1,8 @@
-module CiudadDelBarro where
-
+-- CiudadDelBarro.hs
+-- author: Pablo Tato Ramos
+-- Movidas de ADA (Nov. 2016)
+-- Un algoritmo que se puede hacer voraz, pero con backtracking, porque doy
+-- una cantidad de asco abrumadora. Lección: piensa antes de picar código.
 import Control.Monad
 
 type Node a = a
