@@ -1,0 +1,3 @@
+[submodule "C/life"]
+	path = C/life
+	url = https://github.com/superpokes/life.git
