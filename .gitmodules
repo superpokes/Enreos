@@ -1,3 +1,6 @@
 [submodule "C/life"]
 	path = C/life
 	url = https://github.com/superpokes/life.git
+[submodule "contests/hashcode2017/rubbercode"]
+	path = contests/hashcode2017/rubbercode
+	url = https://github.com/JMAgundezG/rubbercode
