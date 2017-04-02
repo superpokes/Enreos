@@ -1,16 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TupleSections #-}
+
 -- | Dumb Dumb Dumb
 module Main where
 
-import System.Environment (getArgs)
-import Data.List (group, sort, maximumBy)
 import Data.Char (toUpper)
-import Control.Arrow
+import Data.Function (on)
+import Data.List (maximumBy)
+import System.Environment (getArgs)
 
 import qualified Data.ByteString as B
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import qualified Data.Text.IO as T
+
+import Data.Map.Strict (fromListWith, toList)
 
 type Text = T.Text
 type ByteString = B.ByteString
@@ -18,8 +22,8 @@ type ByteString = B.ByteString
 -- | I Love Point Free
 mostUsedWord :: Text -> Text
 mostUsedWord =
-    fst . maximumBy (\a b -> snd a `compare` snd b) . map (head &&& length) .
-    group . sort . T.words . T.toUpper
+    fst . maximumBy (compare `on` snd) . toList . fromListWith (+) .
+    map (,1) . T.words . T.toUpper
 
 -- | Apply Data.Text.Encoding functions according to specified encoding.
 decode :: String
